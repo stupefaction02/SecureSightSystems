@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Chatterino.UI.Styles">
+    
+    <!-- Common -->
+    <Color x:Key="Danger">#FF0000</Color>
+
+    <SolidColorBrush x:Key="DangerBackgroundBrush" Color="{StaticResource Danger}"/>
+
+    <!-- Dark tones -->
+    <Color x:Key="PrimaryDark">#181818</Color>
+    <SolidColorBrush x:Key="PrimaryDarkBackgroundBrush" Color="{StaticResource PrimaryDark}" />
+
+    <Color x:Key="SecondaryDark">#333333</Color>
+    <SolidColorBrush x:Key="SecondaryDarkBackgroundBrush" Color="{StaticResource SecondaryDark}" />
+
+    <Color x:Key="ThirdyDark">#000000</Color>
+    <SolidColorBrush x:Key="ThirdyDarkBackgroundBrush" Color="{StaticResource ThirdyDark}" />
+
+    <Color x:Key="ForthyDark">#888888</Color>
+    <SolidColorBrush x:Key="FourtyDarkBackground" Color="{StaticResource ForthyDark}"></SolidColorBrush>
+    
+    <!-- Light tones -->
+    <Color x:Key="PrimaryLight">#4D004D</Color>
+    <SolidColorBrush x:Key="PrimaryLightBackgroundBrush" Color="{StaticResource PrimaryLight}" />
+
+    <Color x:Key="SecondaryLight">#FFFFFF</Color>
+    <SolidColorBrush x:Key="SecondaryLightBackgroundBrush" Color="{StaticResource SecondaryLight}" />
+    <SolidColorBrush x:Key="SecondaryLightBrush" Color="{StaticResource SecondaryLight}" />
+
+    <Color x:Key="ThirdyLight">#8C008C</Color>
+    <SolidColorBrush x:Key="ThirdyLightBrush" Color="{StaticResource ThirdyLight}" />
+
+    <SolidColorBrush x:Key="ThirdyLightBackgroundBrush" Color="{StaticResource ThirdyLight}"/>
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="DangerTextBrush" Color="{StaticResource Danger}" />
+
+    <Color x:Key="NormalLightText">#FFFFFF</Color>
+    <SolidColorBrush x:Key="NormalLightTextBrush" Color="{StaticResource NormalLightText}" />
+
+</ResourceDictionary>
