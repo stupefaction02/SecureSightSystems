@@ -3,14 +3,8 @@ using SecureSightSystems.Core.Services;
 using SecureSightSystems.Services;
 using SecureSightSystems.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-
-using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
 
 namespace SecureSightSystems.Infrastructure
 {
@@ -42,7 +36,7 @@ namespace SecureSightSystems.Infrastructure
     {
         public static void ConfigureNetwork(this IServiceCollection services)
         {
-            services.AddHttpClient("macroscope", client => {
+            services.AddHttpClient("Default", client => {
                 client.BaseAddress = new Uri(WebApiClient.BaseUrl);
             });
         }
@@ -52,7 +46,7 @@ namespace SecureSightSystems.Infrastructure
             var lf = LoggerFactory.Create((builder) =>
             {
                 builder.AddDebug().SetMinimumLevel(LogLevel.Trace);
-                builder.AddSimpleConsole(x => x.SingleLine = true).SetMinimumLevel(LogLevel.Information);
+                builder.AddSimpleConsole(x => x.SingleLine = true).SetMinimumLevel(LogLevel.Trace);
             });
 
             services.AddSingleton(lf);

@@ -6,14 +6,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
-using SecureSightSystems.Core.Models;
 
 namespace SecureSightSystems.Core
 {
@@ -36,8 +31,6 @@ namespace SecureSightSystems.Core
 
         #endregion
 
-        public Dispatcher Dispatcher { get; set; }
-
         private readonly IApiClient apiClient;
         private readonly ILoggerFactory loggerFactory;
         private readonly ILogger logger;
@@ -48,8 +41,6 @@ namespace SecureSightSystems.Core
         private bool isRunning = false;
 
         private int CHUNK_SIZE = 1024;
-
-        private Thread FrameUpdateThread;
 
         public FrameController(IApiClient apiClient, ILoggerFactory loggerFactory)
         {
@@ -63,10 +54,6 @@ namespace SecureSightSystems.Core
         Task currentTask;
         public async Task SetChannelAsync(ChannelMetadata ch)
         {
-            var sw = new Stopwatch();
-
-            sw.Start();
-
             Reset();
 
             Stream networkStream = null;
@@ -85,12 +72,7 @@ namespace SecureSightSystems.Core
                 logger.LogDebug($"apiClient.GetVideoDataAsync() returns exception. Can't reach host. Exception: {ex.Message}");
                 HostIsUnreachableError?.Invoke(ex);
             }
-
-            sw.Stop();
-            logger.LogInformation($"SetChannelAsync {sw.ElapsedMilliseconds}");
         }
-
-        private Stream videoStream;
 
         private async Task StartReceivingData(Stream videoStream, ChannelMetadata source, CancellationToken token)
         {
@@ -177,6 +159,10 @@ namespace SecureSightSystems.Core
                     }
                 }
             }
+            catch (TaskCanceledException)
+            {
+                logger.LogDebug($"Task is cancelled. Channel.Id={source.ChannelId}. Method={nameof(StartReceivingData)}");
+            }
             catch (IOException ex)
             {
                 Debug.WriteLine("TaskCanceledException");
@@ -191,6 +177,8 @@ namespace SecureSightSystems.Core
             {
                 videoStream.Close();
                 videoStream.Dispose();
+
+                logger.LogDebug($"Calling videoStream.Dispose(). Channel.Id={source.ChannelId}. Method={nameof(StartReceivingData)}");
             }
         }
 
@@ -201,8 +189,8 @@ namespace SecureSightSystems.Core
 
         public void Dispose()
         {
-            if (videoStream != null)
-                videoStream.Dispose();
+            startReceivingDataCancelationTokenSource?.Dispose();
+            currentTask?.Dispose();
         }
     }
 }

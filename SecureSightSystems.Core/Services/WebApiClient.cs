@@ -10,7 +10,7 @@ using ChannelMetadata = SecureSightSystems.Core.Models.ChannelMetadata;
 
 namespace SecureSightSystems.Core.Services
 {
-    public class WebApiClient : IApiClient
+    public class WebApiClient : IApiClient, IDisposable
     {
         private readonly IHttpClientFactory clientFactory;
         private readonly HttpClient client;
@@ -80,6 +80,11 @@ namespace SecureSightSystems.Core.Services
             }
 
             return channels;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

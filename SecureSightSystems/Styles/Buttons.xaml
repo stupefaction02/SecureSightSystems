@@ -84,7 +84,6 @@
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="border" Background="{TemplateBinding Background}" 
                             BorderThickness="1" 
-                            BorderBrush="{StaticResource ThirdyLightBrush}" 
                             SnapsToDevicePixels="true">
                         <TextBlock x:Name="contentPresenter" 
                                           Focusable="False"
